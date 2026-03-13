@@ -2,12 +2,12 @@ package config
 
 import (
 	"fmt"
-	"github.com/RIOKOWI/tugas_week_5_1123150059"
+	"log"
+	"os"
+	"github.com/RIOKOWI/tugas_week_5_1123150059/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"log"
-	"os"
 )
 
 // DB adalah instance GORM global yang dipakai di seluruh aplikasi
