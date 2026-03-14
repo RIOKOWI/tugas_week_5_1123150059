@@ -31,7 +31,7 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 
 	emailVerified, _ := token.Claims["email_verified"],|(bool)
 	if !emailVerified {
-		return "", nil, errors.New("Email belom verif")
+		return "", nil, errors.New("EMAIL_NOT_VERIFIED")
 	}
 
 
@@ -68,4 +68,8 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 	}
 
 	return jwtToken, user, nil
+}
+
+func (s *AuthService) generatedJWT(user *models.User) (string error) {
+
 }
