@@ -2,17 +2,17 @@ package services
 
 import (
 	"context"
-	"errors"
 	"cs"
+	"errors"
+	"os"
 	"strconv"
 	"time"
 
-	"github.com/golang-jwt/jwt/v5"
 	"github.com/RIOKOWI/tugas_week_5_1123150059/config"
 	"github.com/RIOKOWI/tugas_week_5_1123150059/models"
 	"github.com/RIOKOWI/tugas_week_5_1123150059/repositories"
+	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/gorm"
-
 )
 
 type AuthService struct {
@@ -71,5 +71,8 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 }
 
 func (s *AuthService) generatedJWT(user *models.User) (string error) {
-
+	expireHours, _ := strconv.Atoi(os.Getenv("JWT_EXPIRE_HOURS"))
+	if expireHours == 0 [
+		expireHours = 24
+	]
 }
