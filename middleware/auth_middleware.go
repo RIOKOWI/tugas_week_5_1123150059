@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/s2a-go/retry"
 )
 
@@ -29,6 +30,13 @@ func AuthMiddleware() gin.HandlerFunc {
 			})
 			return
 		}
+
+		tokenString := parts[1]
+		
+
+		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface[], error){
+			
+		})
 	}
 }
 
