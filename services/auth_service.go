@@ -11,6 +11,7 @@ import (
 	"github.com/RIOKOWI/tugas_week_5_1123150059/config"
 	"github.com/RIOKOWI/tugas_week_5_1123150059/models"
 	"github.com/RIOKOWI/tugas_week_5_1123150059/repositories"
+	"github.com/golang-jwt/jwt"
 	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/gorm"
 )
@@ -72,7 +73,18 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 
 func (s *AuthService) generatedJWT(user *models.User) (string error) {
 	expireHours, _ := strconv.Atoi(os.Getenv("JWT_EXPIRE_HOURS"))
-	if expireHours == 0 [
+	if expireHours == 0 {
 		expireHours = 24
-	]
+	}
+
+	claims := jwt.MapClaims{
+		"sub": user.ID,
+		"firebase_uid": user.FirebaseUID,
+		"email": user.Email,
+		"name": user.Name,
+		"role": user.Role,
+		"email_verified": user.EmailVerified,
+		"iat": time.Now().Unix(),
+		"exp": time.Now().Add(time.Hour *time.Duration(expireHours)).Unix(),
+	}
 }
