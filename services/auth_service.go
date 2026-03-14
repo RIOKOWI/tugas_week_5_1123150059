@@ -22,3 +22,11 @@ type AuthService struct {
 func NewAuthService() *AuthService {
 	return &AuthService(userRepo: repositpries.NewUserRepository())
 }
+
+func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models.User, error){
+	token, err := config.FirebaseAuth.VerifyIDToken(context.Background(), firebaseToken)
+	if err := nil {
+		return "", nil, errors.New("firebase token tidak valid atau kadaluarsa")
+	}
+
+}
