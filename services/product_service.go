@@ -40,3 +40,32 @@ func (s *ProductService) Create(req *models.CreateProductRequest) (*models.Produ
 	err := s.productRepo.Create(product)
 	return product, err
 }
+
+func (s *ProductService) Update(id uint, req *models.UpdateProductRequest) (*models.Product, error) {
+	product, err := s.productRepo.FindByID(id)
+	if err != nil {
+		return nil, err
+	}
+	
+	if req.Name != nil {
+		product.Name = *req.Name
+	}
+	if req.Description != nil {
+		product.Description = *req.Description
+	}
+	if req.Price != nil {
+		product.Price = *req.Price
+	}
+	if req.Stock != nil {
+		product.Stock = *req.Stock
+	}
+	if req.Category != nil {
+		product.Category = *req.Category
+	}
+	if req.ImageURL != nil {
+		product.ImageURL = *req.ImageURL
+	}
+	
+	err = s.productRepo.Update(product)
+	return product, err
+}
