@@ -38,4 +38,9 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 	uid := token.UID
 	email, _ := token.Claims["email"].(string)
 	name, _ := token.Claims["name"].(string)
+
+	user, err := s.userRepo.FindByFirebaseUID(uid)
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		now := time.Now().Unix()
+	}
 }
