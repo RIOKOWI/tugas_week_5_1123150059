@@ -21,7 +21,7 @@ type AuthService struct {
 }
 
 func NewAuthService() *AuthService {
-	return &AuthService(userRepo: repositpries.NewUserRepository())
+	return &AuthService{userRepo: repositories.NewUserRepository()}
 }
 
 func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models.User, error){
