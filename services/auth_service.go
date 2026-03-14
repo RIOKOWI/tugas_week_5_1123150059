@@ -17,7 +17,7 @@ import (
 )
 
 type AuthService struct {
-	UserRepo *repositories.UserRepository
+	userRepo *repositories.UserRepository
 }
 
 func NewAuthService() *AuthService {
@@ -30,7 +30,7 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 		return "", nil, errors.New("firebase token tidak valid atau kadaluarsa")
 	}
 
-	emailVerified, _ := token.Claims["email_verified"],|(bool)
+	emailVerified, _ := token.Claims["email_verified"].(bool)
 	if !emailVerified {
 		return "", nil, errors.New("EMAIL_NOT_VERIFIED")
 	}
@@ -43,7 +43,7 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 	user, err := s.userRepo.FindByFirebaseUID(uid)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		now := time.Now().Unix()
-		user = models.User{
+		user = &models.User{
 			FirebaseUID:   uid,
 			Email:         email,
 			Name:          name,
@@ -71,7 +71,7 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 	return jwtToken, user, nil
 }
 
-func (s *AuthService) generatedJWT(user *models.User) (string error) {
+func (s *AuthService) generateJWT(user *models.User) (string, error) {
 	expireHours, _ := strconv.Atoi(os.Getenv("JWT_EXPIRE_HOURS"))
 	if expireHours == 0 {
 		expireHours = 24
