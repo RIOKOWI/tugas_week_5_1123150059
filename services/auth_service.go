@@ -25,7 +25,7 @@ func NewAuthService() *AuthService {
 
 func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models.User, error){
 	token, err := config.FirebaseAuth.VerifyIDToken(context.Background(), firebaseToken)
-	if err := nil {
+	if err != nil {
 		return "", nil, errors.New("firebase token tidak valid atau kadaluarsa")
 	}
 
@@ -61,4 +61,11 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 		user.EmailVerified = true
 		s.userRepo.Update(user)
 	}
+
+	jwtToken, err := s.generateJWT(user)
+	if err != nil {
+		return "", nil, errors.New("gagal membuat token")
+	}
+
+	return jwtToken, user, nil
 }
