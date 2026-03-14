@@ -42,5 +42,13 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 	user, err := s.userRepo.FindByFirebaseUID(uid)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		now := time.Now().Unix()
+		user = models.User{
+			FirebaseUID:   uid,
+			Email:         email,
+			Name:          name,
+			Role: 		   "user",
+			EmailVerified: true,
+			LastLoginAt:   &now,
+		}
 	}
 }
