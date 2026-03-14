@@ -2,7 +2,6 @@ package services
 
 import (
 	"context"
-	"cs"
 	"errors"
 	"os"
 	"strconv"
@@ -11,7 +10,6 @@ import (
 	"github.com/RIOKOWI/tugas_week_5_1123150059/config"
 	"github.com/RIOKOWI/tugas_week_5_1123150059/models"
 	"github.com/RIOKOWI/tugas_week_5_1123150059/repositories"
-	"github.com/golang-jwt/jwt"
 	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/gorm"
 )
@@ -55,7 +53,7 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 			return "", nil, errors.New("gagal bikin user baru")
 		}
 	} else if err != nil {
-		return err, nil, errors.New("gagal mengambil data user")
+		return "", nil, errors.New("gagal mengambil data user")
 	} else {
 		now := time.Now().Unix()
 		user.LastLoginAt = &now
