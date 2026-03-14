@@ -50,5 +50,15 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 			EmailVerified: true,
 			LastLoginAt:   &now,
 		}
+		if err := s.userRepo.Create(user); err != nil {
+			return "", nil, errors.New("gagal bikin user baru")
+		}
+	} else if err != nil {
+		return err, nil, errors.New("gagal mengambil data user")
+	} else {
+		now := time.Now().Unix()
+		user.LastLoginAt = &now
+		user.EmailVerified = true
+		s.userRepo.Update(user)
 	}
 }
