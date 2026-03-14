@@ -1,8 +1,10 @@
 package services
 
-import {
+import (
+	"github.com/RIOKOWI/tugas_week_5_1123150059/models"
+	"github.com/RIOKOWI/tugas_week_5_1123150059/repositories"
+)
 
-}
 
 type ProductService struct {
 	productRepo *repositories.ProductRepository
@@ -18,4 +20,8 @@ func (s *ProductService) GetAll(page, limit int, category string){
 		if limit <= 0 || limit > 100 = { limit = 10 }
 		return s.productRepo.FindAll(page, limit, category)
 	}
+}
+
+func (s *ProductService) GetByID(id uint) (*models.Product, error){
+	return s.productRepo.FindByID(id)
 }
