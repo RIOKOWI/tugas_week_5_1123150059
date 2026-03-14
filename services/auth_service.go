@@ -34,4 +34,8 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 		return "", nil, errors.New("Email belom verif")
 	}
 
+
+	uid := token.UID
+	email, _ := token.Claims["email"].(string)
+	name, _ := token.Claims["name"].(string)
 }
