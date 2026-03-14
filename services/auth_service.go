@@ -87,4 +87,8 @@ func (s *AuthService) generatedJWT(user *models.User) (string error) {
 		"iat": time.Now().Unix(),
 		"exp": time.Now().Add(time.Hour *time.Duration(expireHours)).Unix(),
 	}
+
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }
