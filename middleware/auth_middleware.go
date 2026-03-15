@@ -50,6 +50,15 @@ func AuthMiddleware() gin.HandlerFunc {
 			})
 			return
 		}
+
+		claims, ok := token.Claims.(jwt.MapClaims)
+		if !ok {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"success": false,
+				"message": "Token claims tidak valid",
+			})
+			return
+		}
 	}
 }
 
