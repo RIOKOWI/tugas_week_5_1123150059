@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/RIOKOWI/tugas_week_5_1123150059/services"
 	"github.com/gin-gonic/gin"
@@ -45,4 +46,24 @@ func (h *AuthHandler) VerifyToken(c *gin.Context) {
 		}
 		return
 	}
+
+	expireHours := 24
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": "Login berhasil",
+		"data": gin.H{
+			"access_token": jwtToken,
+		"token_type": "Bearer",
+		"expires_in": expireHours * 3600,
+		"user": gin.H{
+			"id": user.ID,
+			"firebase_uid": user.FirebaseUID,
+			"email": user.Email,
+			"name": user.Name,
+			"role": user.Role,
+			"email_verified": user.EmailVerified,
+			"created_at": user.CreatedAt.Format(time.RFC3339),
+			},
+		},
+	})
 }
