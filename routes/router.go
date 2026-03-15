@@ -19,4 +19,15 @@ func setupRouter() *gin.Engine {
 		}
 		c.Next()
 	})
+
+	authHandler := handlers.NewAuthHandler()
+	productHandler := handlers.NewProductHandler()
+
+	v1 := r.Group("/v1")
+	{
+	
+			v1.GET("/health", func(c *gin.Context) {
+			c.JSON(200, gin.H{"status": "ok", "service": "rio-achyar"})
+		})
+	}
 }
