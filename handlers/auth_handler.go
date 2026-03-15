@@ -27,4 +27,22 @@ func (h *AuthHandler) VerifyToken(c *gin.Context) {
 		})
 		return
 	}
+
+	jwtToken, user, err := h.authService.VerifyFirebaseToken(req.FirebaseToken)
+	if err != nil {
+		if err.Error() == "EMAIL_NOT_VERIFIED" {
+			c.JSON(http.StatusForbidden, gin.H{
+				"success": false,
+				"message": "Email belum diverifikasi. Cek inbox email Anda.",
+				"error_code": "EMAIL_NOT_VERIFIED",
+			})
+		} else {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"success": false,
+				"message": err.Error(),
+				"error_code": "INVALID_FIREBASE_TOKEN",
+			})
+		}
+		return
+	}
 }
