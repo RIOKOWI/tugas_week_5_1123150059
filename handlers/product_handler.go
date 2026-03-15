@@ -92,3 +92,16 @@ func (h *ProductHandler) Update(c *gin.Context) {
 	}
 		c.JSON(http.StatusOK, gin.H{"success": true, "message": "Produk diperbarui", "data": product})
 }
+
+func (h *ProductHandler) Delete(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"success": false, "message": "IDtidak valid"})
+		return
+	}
+	if err := h.productService.Delete(uint(id)); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"success": false, "message": "Produk tidak ditemukan"})
+		return
+	}
+		c.JSON(http.StatusOK, gin.H{"success": true, "message": "Produk berhasildihapus"})
+}
