@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"log"
 
-func main() {
-	fmt.Println("Hello world")
+	"github.com/joho/godotenv"
+)
+
+func main(){
+	if err := godotenv.Load(); err != nil {
+		log.Println("File .env tidak ditemukan, menggunakan environment variable sistem")
+	}
+
+	
 }
