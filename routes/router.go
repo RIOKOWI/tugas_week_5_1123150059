@@ -29,5 +29,10 @@ func setupRouter() *gin.Engine {
 			v1.GET("/health", func(c *gin.Context) {
 			c.JSON(200, gin.H{"status": "ok", "service": "rio-achyar"})
 		})
+
+	}
+	auth := v1.Group("/auth")
+	{
+		auth.POST("/verify-token", authHandler.VerifyToken)
 	}
 }
