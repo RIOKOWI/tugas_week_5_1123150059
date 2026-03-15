@@ -59,6 +59,13 @@ func AuthMiddleware() gin.HandlerFunc {
 			})
 			return
 		}
+
+		c.Set("user_id", claims["sub"])
+		c.Set("email", claims["email"])
+		c.Set("role", claims["role"])
+		c.Set("firebase_uid", claims["firebase_uid"])
+
+		c.Next()
 	}
 }
 
