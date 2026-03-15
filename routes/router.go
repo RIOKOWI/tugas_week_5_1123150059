@@ -30,9 +30,29 @@ func setupRouter() *gin.Engine {
 			c.JSON(200, gin.H{"status": "ok", "service": "rio-achyar"})
 		})
 
-	}
+	
 	auth := v1.Group("/auth")
 	{
 		auth.POST("/verify-token", authHandler.VerifyToken)
 	}
+
+	protected := v1.Group("")
+	protected.Use(middleware.AuthMiddleware())
+	{
+		products := protected.Group("/products")
+	{
+			products.GET("", productHandler.GetAll) 
+			products.GET("/:id", productHandler.GetByID) 
+		
+			adminProducts := products.Group("")
+			adminProducts.Use(middleware.AdminOnly())
+				{
+					adminProducts.POST("", productHandler.Create) 
+					adminProducts.PUT("/:id", productHandler.Update) 
+					adminProducts.DELETE("/:id", productHandler.Delete)
+				}
+			}
+		}
+	}
+	return r
 }
