@@ -35,12 +35,21 @@ func AuthMiddleware() gin.HandlerFunc {
 		tokenString := parts[1]
 		
 
-		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface[], error){
+		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error){
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, jwt.ErrSignatureInvalid
 			}
 			return []byte(os.Getenv("JWT_SECRET")), nil
 		})
+
+		if err != nil || !token.Valid {
+				c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+					"success": false,
+					"message": "Token tidak valid atau kadaluarsa",
+					"error_code": "INVALID_TOKEN",
+			})
+			return
+		}
 	}
 }
 
