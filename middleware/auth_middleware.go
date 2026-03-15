@@ -69,3 +69,17 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
+func AdminOnly() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		role, _ := c.Get("role")
+		if role != "admin" {
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+				"success": false,
+				"message": "Akses ditolak. Hanya admin yang diizinkan.",
+				"error_code": "FORBIDDEN",
+			})
+			return
+		}
+		c.Next()
+	}
+}
