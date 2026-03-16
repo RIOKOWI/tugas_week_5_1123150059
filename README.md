@@ -12,7 +12,7 @@ http://localhost:8080/v1/health
 
 ### Example
 
-![](assets\readme\health.png)
+![](assets/readme/health.png)
 
 ---
 
@@ -27,8 +27,8 @@ https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={{FIRE
 
 ### Example
 
-![](assets\readme\login.png)
-![](assets\readme\tabel_user.png)
+![](assets/readme/login.png)
+![](assets/readme/tabel_user.png)
 
 ---
 
@@ -42,7 +42,7 @@ POST
 
 
 ### Example
-![](assets\readme\verify-token.png)
+![](assets/readme/verify-token.png)
 
 ---
 
@@ -56,7 +56,7 @@ GET
 
 ### Example
 
-![](assets\readme\get-all-products.png)
+![](assets/readme/get-all-products.png)
 
 ---
 
@@ -70,20 +70,20 @@ GET
 
 ### Example
 
-![](assets\readme\get-product-by-id.png)
+![](assets/readme/get-product-by-id.png)
 
 ---
 
 # Seeder
 
-- Command Running Seed:
+- Command Running Seed
 ```bash
 go run seeds/seed.go
 ```
 
 ### Setelah di run
 
-![](assets\readme\tabel_products.png)
+![](assets/readme/tabel_products.png)
 
 ---
 
@@ -91,7 +91,7 @@ go run seeds/seed.go
 
 ### User 
 
-![](assets\readme\User-Interaction-Sequence-2026-03-16-045021.png)
+![](assets/readme/User-Interaction-Sequence-2026-03-16-045021.png)
 
 ### Code
 ```bash
@@ -115,7 +115,7 @@ Handler-->>Client: JSON Response
 
 # Get All Product
 
-![](assets\readme\User-Interaction-Sequence-2026-03-16-045557.png)
+![](assets/readme/User-Interaction-Sequence-2026-03-16-045557.png)
 
 ### Code
 
