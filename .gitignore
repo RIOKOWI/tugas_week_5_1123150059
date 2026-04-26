@@ -1,0 +1,7 @@
+catalog.sql
+.env
+firebase-service-account.json
+*.exe
+*.test
+/tmp
+/vendor

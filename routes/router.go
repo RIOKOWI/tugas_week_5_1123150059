@@ -22,6 +22,9 @@ func SetupRouter() *gin.Engine {
 
 	authHandler := handlers.NewAuthHandler()
 	productHandler := handlers.NewProductHandler()
+	cartHandler := handlers.NewCartHandler()
+	orderHandler := handlers.NewOrderHandler()
+
 
 	v1 := r.Group("/v1")
 	{
@@ -51,6 +54,31 @@ func SetupRouter() *gin.Engine {
 					adminProducts.PUT("/:id", productHandler.Update) 
 					adminProducts.DELETE("/:id", productHandler.Delete)
 				}
+			}
+			// Cart
+			cart := protected.Group("/cart")
+			{
+				cart.GET("", cartHandler.GetCart)           // GET    /v1/cart
+				cart.POST("", cartHandler.AddToCart)        // POST   /v1/cart
+				cart.PUT("/:id", cartHandler.UpdateCartItem) // PUT    /v1/cart/:id
+				cart.DELETE("/:id", cartHandler.RemoveCartItem) // DELETE /v1/cart/:id
+				cart.DELETE("", cartHandler.ClearCart)      // DELETE /v1/cart
+			}
+
+			// Orders
+			orders := protected.Group("/orders")
+			{
+				orders.POST("/checkout", orderHandler.Checkout)    // POST   /v1/orders/checkout
+				orders.GET("", orderHandler.GetMyOrders)           // GET    /v1/orders
+				orders.GET("/:id", orderHandler.GetOrderByID)      // GET    /v1/orders/:id
+			}
+
+			// Admin — order management
+			admin := protected.Group("/admin")
+			admin.Use(middleware.AdminOnly())
+			{
+				admin.GET("/orders", orderHandler.GetAllOrders)                     // GET /v1/admin/orders
+				admin.PUT("/orders/:id/status", orderHandler.UpdateOrderStatus)     // PUT /v1/admin/orders/:id/status
 			}
 		}
 	}
