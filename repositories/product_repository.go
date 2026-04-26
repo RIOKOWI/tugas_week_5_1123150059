@@ -49,3 +49,9 @@ func (r *ProductRepository) Update(product *models.Product) error {
 func (r *ProductRepository) Delete(id uint) error {
 	return config.DB.Delete(&models.Product{}, id).Error
 }
+
+// UpdateStock memperbarui stok produk
+func (r *ProductRepository) UpdateStock(id uint, stock int) error {
+	return config.DB.Model(&models.Product{}).Where("id = ?", id).Update("stock", stock).Error
+}
+
