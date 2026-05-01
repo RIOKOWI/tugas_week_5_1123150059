@@ -10,17 +10,18 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main(){
+func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Println("File .env tidak ditemukan, menggunakan environment variable sistem")
 	}
+	logger.Init()
 
 	config.InitFirebase()
-	
+
 	config.InitDatabase()
 
 	router := routes.SetupRouter()
-	
+
 	port := os.Getenv("APP_PORT")
 	if port == "" {
 		port = "8080"
